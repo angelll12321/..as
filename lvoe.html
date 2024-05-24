@@ -1,0 +1,91 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><3</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: red;
+        }
+        #mainText {
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        .randomText {
+            position: absolute;
+            font-size: 1.5rem;
+        }
+        #finalContainer {
+            display: none;
+            text-align: center;
+        }
+        #finalText {
+            font-size: 1rem;
+        }
+        #finalImage {
+            margin-top: 20px;
+            width: 200px; /* Puedes ajustar este valor según tus necesidades */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="mainText">Cosas que más me gustan de ti</div>
+    <div id="finalContainer">
+        <div id="finalText">Me gusta todo de ti, contigo soy feliz, estos 3 meses la he pasado super bien contigo, a pesar de todos los problemas que tengamos se que podremos juntos y pronto podremos tener todo lo que deseamos, solo mantente a mi lado y nunca me falles porque yo estoy dando todo de mi para hacerte feliz :(</div>
+        <img id="finalImage" src="gato.jpg" alt="Imagen de amor">
+    </div>
+    <script>
+        const texts = [
+            "Tus ojitos", "Tu cabello", "Tus chichis😻", "Tus cachetes",
+            "Tus labios", "Cuando te acuestas en mi pecho", "Tu manera de amarme",
+            "Tus berrinches", "Tu estatura", "Los pequeños momentos que pasamos juntos"
+        ];
+        let index = 0;
+        const positions = [];
+
+        document.getElementById('mainText').addEventListener('click', function() {
+            if (index < texts.length) {
+                let top, left;
+                let overlap;
+
+                do {
+                    overlap = false;
+                    top = Math.random() * (window.innerHeight - 50);
+                    left = Math.random() * (window.innerWidth - 150);
+                    for (const pos of positions) {
+                        if (Math.abs(top - pos.top) < 50 && Math.abs(left - pos.left) < 150) {
+                            overlap = true;
+                            break;
+                        }
+                    }
+                } while (overlap);
+
+                positions.push({ top, left });
+
+                const newText = document.createElement('div');
+                newText.textContent = texts[index];
+                newText.className = 'randomText';
+                newText.style.top = top + 'px';
+                newText.style.left = left + 'px';
+                document.body.appendChild(newText);
+                index++;
+            } else {
+                // Remove all random texts
+                document.querySelectorAll('.randomText').forEach(e => e.remove());
+                // Hide main text and show final container
+                document.getElementById('mainText').style.display = 'none';
+                document.getElementById('finalContainer').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
